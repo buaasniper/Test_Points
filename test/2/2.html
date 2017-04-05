@@ -17,9 +17,10 @@
             		vertices = vertices.concat([i, j, 0]);
         }
   	  var colors = [];
+      var esp = 1e-5;
           for (var i=0; i < 1; i+=0.01) {
           	for (var j=0; j < 1; j+=0.01){
-                    if ((i == 0.5)||(i == 0.01))
+                    if ((Math.abs(i - 0.5) < esp)||(i == 0.01))
             		colors = colors.concat([i, 0, 1-i]);
 		    else
 			colors = colors.concat([1, 1, 1]);
