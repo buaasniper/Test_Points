@@ -18,8 +18,13 @@
         }
   	  var colors = [];
           for (var i=0; i < 1; i+=0.01) {
-          	for (var j=0; j < 1; j+=0.01)
+          	for (var j=0; j < 1; j+=0.01){
+                    if ((i == 0.5)||(i == 0.01))
             		colors = colors.concat([i, 0, 1-i]);
+		    else
+			colors = colors.concat([1, 1, 1]);
+		}
+
         }
 
          //var colors = [0,0,1, 1,0,0, 0,1,0, 1,0,1,0 , 0 , 0.1,0 , 0 , 0.2,0 , 0 , 0.3,0 , 0 , 0.4];
