@@ -9,7 +9,7 @@ function get_pixels_not_zero(gl) {
   gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
   res = {};
   for (var i in pixels) {
-    if (pixels[i] != 127 && pixels[i] != 255 && pixels[i] != 229) {
+    if (pixels[i] != 127 && pixels[i] != 255 && pixels[i] != 229 && pixels[i] != 128) {
       res[i] = pixels[i];
     }
   }
