@@ -4,17 +4,6 @@
     <canvas width = "400" height = "400" id = "my_Canvas"></canvas>
 
       <script>
-function get_pixels_not_zero(gl) {
-  var pixels = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
-  gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
-  res = {};
-  for (var i in pixels) {
-    if (pixels[i] != 127 && pixels[i] != 255 && pixels[i] != 229 && pixels[i] != 128) {
-      res[i] = pixels[i];
-    }
-  }
-  console.log(res); // Uint8Array
-}
 
          /*============= Creating a canvas ==================*/
          var canvas = document.getElementById('my_Canvas');
@@ -31,10 +20,10 @@ function get_pixels_not_zero(gl) {
       var esp = 1e-5;
           for (var i=0; i < 1; i+=0.01) {
           	for (var j=0; j < 1; j+=0.01){
-                    if ((Math.abs(i - 0.5) < esp)||(i == 0.01))
-            		colors = colors.concat([Math.round(i*100)/100, 0, Math.round((1-i)*100)/100]);
-		    else
-			colors = colors.concat([1, 1, 1]);
+                    //if ((Math.abs(i - 0.5) < esp)||(i == 0.01))
+            		colors = colors.concat( 200/255 * i, 0, 1 - (200/255 * i));
+		    //else
+			//colors = colors.concat([1, 1, 1]);
 		}
 
         }
@@ -159,8 +148,6 @@ function get_pixels_not_zero(gl) {
 
          //Draw the triangle
          gl.drawArrays(gl.POINTS, 0, 10000);
-
-         get_pixels_not_zero(gl);
 
       </script>
       
