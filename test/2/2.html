@@ -17,11 +17,13 @@
             		vertices = vertices.concat([i, j, 0]);
         }
   	  var colors = [];
+	  var t;
       var esp = 1e-5;
           for (var i=0; i < 1; i+=0.01) {
           	for (var j=0; j < 1; j+=0.01){
                     //if ((Math.abs(i - 0.5) < esp)||(i == 0.01))
-            		colors = colors.concat( Math.round(255 * i) / 255, 0, 1 - (Math.round(255 * i) / 255));
+					t =  Math.round(255 * i) / 255;
+            		colors = colors.concat( t, 0, 1 - t);
 		    //else
 			//colors = colors.concat([1, 1, 1]);
 		}
@@ -57,7 +59,7 @@
             'varying vec3 vColor;'+
             'void main(void) {' +
                ' gl_Position = vec4(coordinates, 1.0);' + 
-		'gl_PointSize = 1.0035;'+
+		'gl_PointSize = 5.;'+
                'vColor = color;'+
             '}';
             
@@ -147,7 +149,7 @@
          gl.viewport(0,0,canvas.width,canvas.height);
 
          //Draw the triangle
-         gl.drawArrays(gl.POINTS, 0, 10000);
+         gl.drawArrays(gl.POINTS, 0, 1);
 
       </script>
       
