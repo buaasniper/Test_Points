@@ -8,11 +8,13 @@ var vertexShaderText =
 'uniform mat4 mWorld;',
 'uniform mat4 mView;',
 'uniform mat4 mProj;',
+'uniform vec2 dim;',
 '',
 'void main()',
 '{',
 '  fragTexCoord = vertTexCoord;',
-'  gl_Position = mProj * mView * mWorld * vec4(vertPosition, 1.0);',
+'  vec2 pos = mProj * mView * mWorld * vec4(vertPosition, 1.0);',
+'  gl_Position = vec4(floor((dim/2.0)*(pos.xy+1.0))*2.0/dim-1.0, pos.z, pos.w);',
 '}'
 ].join('\n');
 
@@ -205,6 +207,8 @@ var InitDemo = function () {
 
 	// Tell OpenGL state machine which program should be active.
 	gl.useProgram(program);
+
+	gl.uniform2f(gl.getUniformLocation(program, 'dim'), canvas.width, canvas.height);
 
 	var matWorldUniformLocation = gl.getUniformLocation(program, 'mWorld');
 	var matViewUniformLocation = gl.getUniformLocation(program, 'mView');

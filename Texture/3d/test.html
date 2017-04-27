@@ -17,11 +17,13 @@ attribute vec2 texcoord;
 varying vec3 Color;
 varying vec2 Texcoord;
 
+uniform vec2 dim;
+
 void main()
 {
   Color = color;
   Texcoord = texcoord;
-  gl_Position = vec4(position, 0.0, 1.0);
+  gl_Position = vec4(floor((dim/2.0)*(position+1.0))*2.0/dim-1.0, 0.0, 1.0);
 }
 		</script>
 		<script id="shader-fs" type="x-shader/x-fragment">
@@ -150,10 +152,10 @@ var InitDemo = function () {
 	);
 	gl.enableVertexAttribArray(texAttribLocation);
 
-	//var colorUniformLocation = gl.getUniformLocation(program, 'color');
-
 	// Tell OpenGL state machine which program should be active.
 	gl.useProgram(program);
+
+	gl.uniform2f(gl.getUniformLocation(program, 'dim'), canvas.width, canvas.height);
 
 	//
 	// Main render loop
