@@ -26,7 +26,7 @@ void main()
   Texcoord = texcoord;
   vec2 pos = position;
   pos.x = pos.x / scale;
-  pos = floor((dim/2.0)*(pos+1.0))*2.0/dim-1.0;
+  //pos = floor((dim/2.0)*(pos+1.0))*2.0/dim-1.0;
   gl_Position = vec4(pos, 0.0, 1.0);
 }
 		</script>
@@ -50,8 +50,14 @@ var gl;
 var InitDemo = function () {
 	console.log('This is working');
 
+	/* aa, no pos     = bad straight edges
+	 * no aa, no pos  = seems to fix everything
+	 * no aa, pos     = 
+	 * aa, pos        = good straight edges, bad slants
+	 */
+
 	var canvas = document.getElementById('game-surface');
-	gl = canvas.getContext('webgl');
+	gl = canvas.getContext('webgl', {antialias: false});
 
 	if (!gl) {
 		console.log('WebGL not supported, falling back on experimental-webgl');
@@ -98,8 +104,8 @@ var InitDemo = function () {
 	}
 
 	var vertices = [
-		-1.0,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-let
-		 1.0,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
+		-0.5,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-let
+		 0.5,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
 		 1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, // Bottom-right
 		-1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 1.0  // Bottom-let
 	];
