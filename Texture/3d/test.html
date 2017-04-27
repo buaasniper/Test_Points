@@ -18,12 +18,16 @@ varying vec3 Color;
 varying vec2 Texcoord;
 
 uniform vec2 dim;
+uniform float scale;
 
 void main()
 {
   Color = color;
   Texcoord = texcoord;
-  gl_Position = vec4(floor((dim/2.0)*(position+1.0))*2.0/dim-1.0, 0.0, 1.0);
+  vec2 pos = position;
+  pos.x = pos.x / scale;
+  pos = floor((dim/2.0)*(pos+1.0))*2.0/dim-1.0;
+  gl_Position = vec4(pos, 0.0, 1.0);
 }
 		</script>
 		<script id="shader-fs" type="x-shader/x-fragment">
@@ -157,6 +161,11 @@ var InitDemo = function () {
 
 	gl.uniform2f(gl.getUniformLocation(program, 'dim'), canvas.width, canvas.height);
 
+	var scale = 1.0;
+	var dir = 1;
+
+	var scalepos = gl.getUniformLocation(program, 'scale');
+
 	//
 	// Main render loop
 	//
@@ -166,11 +175,29 @@ var InitDemo = function () {
 		gl.bindTexture(gl.TEXTURE_2D, texture);
 		gl.activeTexture(gl.TEXTURE0);
 
+		gl.uniform1f(scalepos, scale);
+
 		gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_SHORT, 0);
+
+		scale = scale + dir * 0.33;
+		if (scale > 5)
+		{
+			scale = 5;
+			dir = -1;
+		}
+		else if (scale < 1)
+		{
+			scale = 1.0;
+			dir = 1;
+		}
 
 		//requestAnimationFrame(loop);
 	};
-	requestAnimationFrame(loop);
+	//requestAnimationFrame(loop);
+	window.addEventListener("keydown", function(e) {
+		if (e.key !== "ArrowRight") return;
+		requestAnimationFrame(loop);
+	});
 };
 		</script>
 	</body>
