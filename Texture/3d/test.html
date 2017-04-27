@@ -8,16 +8,19 @@
 		<canvas id="game-surface" width="800" height="600" style="border: 1px solid black">
 			Your browser does not support HTML5
 		</canvas>
-		<img id="crate-image" src="crate.png" width="0" height="0"></img>
+		<img id="texture" src="cat.png" width="0" height="0"></img>
 		<script id="shader-vs" type="x-shader/x-vertex">
 attribute vec2 position;
 attribute vec3 color;
+attribute vec2 texcoord;
 
 varying vec3 Color;
+varying vec2 Texcoord;
 
 void main()
 {
   Color = color;
+  Texcoord = texcoord;
   gl_Position = vec4(position, 0.0, 1.0);
 }
 		</script>
@@ -25,10 +28,13 @@ void main()
 precision mediump float;
 
 varying vec3 Color;
+varying vec2 Texcoord;
+
+uniform sampler2D tex;
 
 void main()
 {
-  gl_FragColor = vec4(Color, 1.0);
+  gl_FragColor = texture2D(tex, Texcoord) * vec4(Color, 1.0);
 }
 		</script>
 		<script src="gl-matrix.js"></script>
@@ -86,10 +92,10 @@ var InitDemo = function () {
 	}
 
 	var vertices = [
-		-0.5,  0.5, 1.0, 0.0, 0.0, // Top-let
-		 0.5,  0.5, 0.0, 1.0, 0.0, // Top-right
-		 0.5, -0.5, 0.0, 0.0, 1.0, // Bottom-right
-		-0.5, -0.5, 1.0, 1.0, 1.0  // Bottom-let
+		-1.0,  1.0, 1.0, 0.0, 0.0, 0.0, 0.0, // Top-let
+		 1.0,  1.0, 0.0, 1.0, 0.0, 1.0, 0.0, // Top-right
+		 1.0, -1.0, 0.0, 0.0, 1.0, 1.0, 1.0, // Bottom-right
+		-1.0, -1.0, 1.0, 1.0, 1.0, 0.0, 1.0  // Bottom-let
 	];
 
 	var vbo = gl.createBuffer();
@@ -105,13 +111,19 @@ var InitDemo = function () {
 	gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ebo);
 	gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(elements), gl.STATIC_DRAW);
 
+	var texture = gl.createTexture();
+	gl.bindTexture(gl.TEXTURE_2D, texture);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, document.getElementById('texture'));
+
 	var positionAttribLocation = gl.getAttribLocation(program, 'position');
 	gl.vertexAttribPointer(
 		positionAttribLocation, // Attribute location
 		2, // Number of elements per attribute
 		gl.FLOAT, // Type of elements
 		gl.FALSE,
-		5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+		7 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
 		0 // Offset from the beginning of a single vertex to this attribute
 	);
 	gl.enableVertexAttribArray(positionAttribLocation);
@@ -122,10 +134,21 @@ var InitDemo = function () {
 		3, // Number of elements per attribute
 		gl.FLOAT, // Type of elements
 		gl.FALSE,
-		5 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+		7 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
 		2 * Float32Array.BYTES_PER_ELEMENT // Offset from the beginning of a single vertex to this attribute
 	);
 	gl.enableVertexAttribArray(colorAttribLocation);
+
+	var texAttribLocation = gl.getAttribLocation(program, 'texcoord');
+	gl.vertexAttribPointer(
+		texAttribLocation, // Attribute location
+		2, // Number of elements per attribute
+		gl.FLOAT, // Type of elements
+		gl.FALSE,
+		7 * Float32Array.BYTES_PER_ELEMENT, // Size of an individual vertex
+		5 * Float32Array.BYTES_PER_ELEMENT // Offset from the beginning of a single vertex to this attribute
+	);
+	gl.enableVertexAttribArray(texAttribLocation);
 
 	//var colorUniformLocation = gl.getUniformLocation(program, 'color');
 
@@ -138,10 +161,12 @@ var InitDemo = function () {
 	var loop = function () {
 		var sec = performance.now() / 1000;
 		//gl.uniform3f(colorUniformLocation, 0.0, (Math.sin(sec * 4) + 1) / 2, 0.0);
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		gl.activeTexture(gl.TEXTURE0);
 
 		gl.drawElements(gl.TRIANGLES, elements.length, gl.UNSIGNED_SHORT, 0);
 
-		requestAnimationFrame(loop);
+		//requestAnimationFrame(loop);
 	};
 	requestAnimationFrame(loop);
 };
