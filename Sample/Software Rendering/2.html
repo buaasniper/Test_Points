@@ -19,7 +19,7 @@
   	  var colors = [];
           for (var i=0; i < 1; i+=0.01) {
           	for (var j=i; j < 1; j+=0.01)
-            		colors = colors.concat([(Math.round(i*100))/100, 0, (Math.round((1-i)*100))/100]);
+            		colors = colors.concat([(Math.round(i*255.0))/255, 0, (Math.round((1-i)*255.0))/255.0]);
         }
 
          

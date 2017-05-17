@@ -5,11 +5,17 @@ var vertexShaderText =
 'attribute vec2 vertPosition;',
 'attribute vec3 vertColor;',
 'varying vec3 fragColor;',
+'uniform vec2 dim;',
+'uniform float scale;',
 '',
 'void main()',
 '{',
 '  fragColor = vertColor;',
-'  gl_Position = vec4(vertPosition, 0.0, 1.0);',
+'  vec2 pos = vertPosition;',
+'  pos.x = pos.x / scale;',
+'  pos = floor((dim/2.0)*(pos+1.0))*2.0/dim-1.0;',
+'  gl_Position = vec4(pos, 0.0, 1.0);',
+'  //gl_Position = vec4(vertPosition, 0.0, 1.0);',
 '}'
 ].join('\n'); 
 
@@ -105,6 +111,13 @@ var InitDemo = function(){
 	gl.enableVertexAttribArray(colorAttribLocation);
 	
 	gl.useProgram(program);
+	
+	gl.uniform2f(gl.getUniformLocation(program, 'dim'), canvas.width, canvas.height);
+	var scale = 1.0;
+	var dir = 1;
+	var scalepos = gl.getUniformLocation(program, 'scale');
+	gl.uniform1f(scalepos, scale);
+
 	gl.drawArrays(gl.TRIANGLES, 0, 3);
 	
 };
