@@ -13,7 +13,7 @@ var vertexShaderText =
 '  fragColor = vertColor;',
 '  vec2 pos = vertPosition;',
 '  pos.x = pos.x / scale;',
-'  pos = floor((dim/2.0)*(pos+1.0))*2.0/dim-1.0;',
+'  pos = floor((dim/10.0)*(pos+1.0))*10.0/dim-1.0;',
 '  gl_Position = vec4(pos, 0.0, 1.0);',
 '  //gl_Position = vec4(vertPosition, 0.0, 1.0);',
 '}'
