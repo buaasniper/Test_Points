@@ -35,7 +35,7 @@ var fragmentShaderText =
 var InitDemo = function(){
 	console.log('This is working');
 	var canvas = document.getElementById('WSJ');
-	var gl = canvas.getContext('webgL');
+	var gl = canvas.getContext('webgL',{antialias: false});
 	if (!gl){
 		console.log('WebGL not supported, falling back on experimental-WebGL');
 		gl = canvas.getContext('experimental-webgl');
