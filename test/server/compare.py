@@ -8,8 +8,7 @@ diff1 = ImageChops.subtract(im1,im2,0.01,0)
 diff2 = ImageChops.subtract(im2,im1,0.01,0)
 diff = ImageChops.add(diff1, diff2)
 diff.show()
-diff.save("wsjwsj.png")
-
+diff.save('wsjwsj.png')
 pairs = izip(im1.getdata(), im2.getdata())
 if len(im1.getbands()) == 1:
     dif = sum(abs(p1 - p2) for p1,p2 in pairs)
