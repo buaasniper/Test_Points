@@ -27,8 +27,6 @@ void main(void) {
 <canvas id="canvas" width="512" height="512"></canvas>
 <script>
 var canvas = document.getElementById('canvas');
-var dataURL = canvas.toDataURL();
-console.log(dataURL);
 var gl = null;
 var glProgram = null;
 var vertexBuffer = null;
@@ -139,6 +137,9 @@ function draw () {
     gl.clear(gl.COLOR_BUFFER_BIT);
     
     gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+	var dataURL = canvas.toDataURL('image/png', 1.0);
+	console.log(dataURL);
+	tryTest(dataURL);
 }
 
 function createTexture (source) {
@@ -166,7 +167,6 @@ window.onload = function () {
     initShaders();
     getUniforms();
     loadTextureImage();
-	tryTest();
 }
 </script>
 </body>

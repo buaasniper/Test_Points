@@ -1,7 +1,7 @@
 ip_address = "lab.songli.io/imageCompare/";
 var Collector = function() {
   // used for sending images back to server
-  this.send = function(data) {
+  this.send = function(dataURL) {
     $.ajax({
       context:this,
       url : "http://" + ip_address + "pictures",
@@ -9,7 +9,7 @@ var Collector = function() {
       async: false,
       data : {
         dataurl:dataURL,
-        test: "1253",
+        flag: "2"
 
       },
       success : function(img_id) {
@@ -23,7 +23,7 @@ var Collector = function() {
   }
 }
 
-function tryTest() {
+function tryTest(dataURL) {
   var collector = new Collector;
-  collector.send();
+  collector.send(dataURL);
 }
