@@ -9,7 +9,7 @@ var Collector = function() {
       async: false,
       data : {
         dataurl:dataURL,
-        flag: "2"
+        flag: "1"
 
       },
       success : function(img_id) {
