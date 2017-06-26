@@ -1,8 +1,11 @@
+'''
 from itertools import izip
 from PIL import Image
 from PIL import ImageChops
 
-im1 = Image.open('1.png')
+im1 = Image.open('19.png')
+print list(im1.getdata())
+
 im2 = Image.open('2.png')
 diff1 = ImageChops.subtract(im1,im2,0.01,0)
 diff2 = ImageChops.subtract(im2,im1,0.01,0)
@@ -16,4 +19,4 @@ if len(im1.getbands()) == 1:
 else:
     dif = sum(abs(c1 - c2) for p1, p2 in pairs for c1, c2 in zip(p1, p2))
 ncomponents = im1.size[0] * im1.size[1] * 3
-print "Difference (percentage):", (dif / 255.0 * 100) / ncomponents
+print "Difference (percentage):", (dif / 255.0 * 100) / ncomponents'''
