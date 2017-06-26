@@ -1,11 +1,11 @@
-'''
+
 from itertools import izip
 from PIL import Image
 from PIL import ImageChops
 
 im1 = Image.open('19.png')
 print list(im1.getdata())
-
+'''
 im2 = Image.open('2.png')
 diff1 = ImageChops.subtract(im1,im2,0.01,0)
 diff2 = ImageChops.subtract(im2,im1,0.01,0)
