@@ -1,5 +1,5 @@
 from PIL import Image
-n = 8
+n = 2
 im = Image.new("RGB", (n, n))
 pix = im.load()
 for x in range(n):
