@@ -3,7 +3,7 @@ from itertools import izip
 from PIL import Image
 from PIL import ImageChops
 
-im1 = Image.open('19.png')
+im1 = Image.open('result.png')
 print list(im1.getdata())
 '''
 im2 = Image.open('2.png')
