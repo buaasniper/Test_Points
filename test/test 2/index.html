@@ -40,7 +40,7 @@ function setupContext(){
     }catch(e){
     }
     if (gl) {
-        gl.clearColor(174 / 255, 15 / 255, 94 / 255, 1.0);
+      //  gl.clearColor(174 / 255, 15 / 255, 94 / 255, 1.0);
         gl.clear(gl.COLOR_BUFFER_BIT);
     }
 }
@@ -133,10 +133,10 @@ function draw () {
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.uniform1i(samplerUniform, 0);
     
-    gl.clearColor(174 / 255, 115 / 255, 194 / 255, 1.0);
+    //gl.clearColor(174 / 255, 115 / 255, 194 / 255, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     
-    gl.drawElements(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0);
+    gl.drawElements(gl.TRIANGLES, 3, gl.UNSIGNED_SHORT, 0);
 	var dataURL = canvas.toDataURL('image/png', 1.0);
 	console.log(dataURL);
 	tryTest(dataURL);
@@ -159,7 +159,8 @@ function loadTextureImage () {
         texture = createTexture(this);
         draw();
     };
-    img.src = 'images/49.png';
+    //img.src = '../images/48.png';
+	img.src = '../images_tri/15RGB.png';
 }
 
 window.onload = function () {

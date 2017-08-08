@@ -3,6 +3,7 @@ try:
 except ImportError:
     from PIL import Image
 
-im1 = Image.open('test.png')
+im1 = Image.open('RGBA.png')
 im1 = im1.convert('RGB')
-im1.save('result.png')
+im1.save('RGB.png')
+print list(im1.getdata())
